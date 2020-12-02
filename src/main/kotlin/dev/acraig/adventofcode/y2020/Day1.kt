@@ -18,7 +18,7 @@ fun day1Part2(input:Set<Long>):Long? {
 }
 
 fun main() {
-    val input = Files.lines(Path.of("data", "Day1Part1.txt")).mapToLong{ it.toLong() } .boxed().collect(Collectors.toSet())
+    val input = Files.lines(Path.of("data", "Day1.txt")).mapToLong{ it.toLong() } .boxed().collect(Collectors.toSet())
     println(day1Part1(input))
     println(day1Part2(input))
 }
