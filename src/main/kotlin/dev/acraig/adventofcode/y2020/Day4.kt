@@ -28,7 +28,7 @@ fun day4Part2(input: Path): Int {
     }.count()
 }
 
-fun readFile(input: Path): Sequence<Map<String, String>> {
+private fun readFile(input: Path): Sequence<Map<String, String>> {
     val pattern = """(\w+?):([^\s]+)""".toRegex()
     val source = Files.readString(input)
     val recordsplit = source.splitToSequence("\n\n")
