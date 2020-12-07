@@ -12,7 +12,7 @@ data class BagDefinition(val name: String, val bagTypes: Map<String, Int>) {
             0
         } else {
             bagTypes.map { (key, value) ->
-                allDefinitions[key]!!.countNestedBags(allDefinitions).times(value).plus(value)
+                value + (allDefinitions[key]!!.countNestedBags(allDefinitions) * value)
             }.sum()
         }
     }
