@@ -3,22 +3,22 @@ package dev.acraig.adventofcode.y2020
 import java.nio.file.Files
 import java.nio.file.Path
 
-data class Rule(val name: String, val ranges: List<IntRange>) {
+data class Day16Rule(val name: String, val ranges: List<IntRange>) {
     fun valid(input: Int): Boolean {
         return ranges.any { range -> range.contains(input) }
     }
 }
 
-data class Input(val rules: Collection<Rule>, val myTicket: List<Int>, val otherTickets: Collection<List<Int>>)
+data class Day16Input(val rules: Collection<Day16Rule>, val myTicket: List<Int>, val otherTickets: Collection<List<Int>>)
 
-fun day16Part1(input: Input) {
+fun day16Part1(input: Day16Input) {
     val errorRate = input.otherTickets.flatten().filterNot { field ->
         input.rules.any { rule -> rule.valid(field) }
     }.sum()
     println(errorRate)
 }
 
-fun day16Part2(input: Input) {
+fun day16Part2(input: Day16Input) {
     val validTickets = input.otherTickets.filter { ticket ->
         ticket.all { field ->
             input.rules.any { rule -> rule.valid(field) }
@@ -44,7 +44,7 @@ fun day16Part2(input: Input) {
 
 }
 
-private fun lockFields(input: Map<Int, List<Rule>>): Map<Int, List<Rule>> {
+private fun lockFields(input: Map<Int, List<Day16Rule>>): Map<Int, List<Day16Rule>> {
     val (locked, toConvert) = input.entries.partition { (_, rule) ->
         rule.size == 1
     }
@@ -55,7 +55,7 @@ private fun lockFields(input: Map<Int, List<Rule>>): Map<Int, List<Rule>> {
     return (locked.map { (key, value) -> key to value } + converted).toMap()
 }
 
-private fun parseFile(lines: List<String>): Input {
+private fun parseFile(lines: List<String>): Day16Input {
     val rules = lines.takeWhile { line -> line != "" }.map {
         val name = it.substringBefore(": ")
         val rules = it.substringAfter(": ").split(" or ")
@@ -63,13 +63,13 @@ private fun parseFile(lines: List<String>): Input {
             val (first, second) = rule.split("-")
             first.toInt()..second.toInt()
         }
-        Rule(name, ranges)
+        Day16Rule(name, ranges)
     }
     val myTicket = lines[lines.indexOf("your ticket:") + 1].split(",").map { it.toInt() }
     val otherTickets = lines.drop(lines.indexOf("nearby tickets:") + 1).map {
         it.split(",").map { fieldValue -> fieldValue.toInt() }
     }
-    return Input(rules, myTicket, otherTickets)
+    return Day16Input(rules, myTicket, otherTickets)
 }
 
 fun main() {
