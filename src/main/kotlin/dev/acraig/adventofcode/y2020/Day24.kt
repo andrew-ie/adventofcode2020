@@ -56,7 +56,7 @@ fun day24Part2(input:List<String>) {
             } else { //White
                 adjacentBlackTiles == 2
             }
-        }
+        }.toSet()
     }.map { it.size }.take(101).last()
     println(count)
 }
